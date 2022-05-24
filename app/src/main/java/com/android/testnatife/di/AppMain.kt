@@ -1,12 +1,13 @@
 package com.android.testnatife.di
 
 import android.app.Application
-import com.android.testnatife.di.component.AppComponent
-import com.android.testnatife.di.component.DaggerAppComponent
+import com.android.testnatife.di.components.AppComponent
+import com.android.testnatife.di.components.DaggerAppComponent
 
 
 class AppMain: Application() {
-         lateinit var appComponent: AppComponent
+
+    private lateinit var appComponent: AppComponent
 
 
 

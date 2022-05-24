@@ -1,4 +1,4 @@
-package com.android.testnatife.di.module
+package com.android.testnatife.di.modules
 
 
 
