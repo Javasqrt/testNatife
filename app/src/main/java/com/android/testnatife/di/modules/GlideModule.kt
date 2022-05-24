@@ -1,5 +1,6 @@
 package com.android.testnatife.di.modules
 
+import com.bumptech.glide.Glide
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -11,7 +12,7 @@ class GlideModule {
 
     @Provides
     @Singleton
-    fun provideGlide() : Retrofit? {
+    fun provideGlide() : Glide? {
 
         return null
     }
