@@ -1,7 +1,7 @@
-package com.android.testnatife.retrofit.data.test
+package com.android.testnatife.retrofit.data
 
 import com.android.testnatife.recyclerview.Gif
 
-data class DataTest(
+data class Data(
     val `data`: List<Gif>
 )

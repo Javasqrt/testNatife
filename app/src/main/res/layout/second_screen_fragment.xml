@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.SecondScreenFragment">
 
-    <Button
+   <ImageView
+       android:id="@+id/imagegif"
+       android:layout_width="match_parent"
+       android:layout_height="450dp"
+       android:padding="10dp"/>
+    <TextView
+        android:id="@+id/namegif"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="SecondFragment"
-        android:textStyle="normal"
-        android:textAllCaps="false"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:gravity="center" />
+</LinearLayout>

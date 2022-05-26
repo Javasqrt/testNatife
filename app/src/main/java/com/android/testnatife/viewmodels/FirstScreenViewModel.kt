@@ -3,12 +3,14 @@ package com.android.testnatife.viewmodels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.viewModelScope
 import com.android.testnatife.di.AppMain
 import com.android.testnatife.recyclerview.Gif
-import com.android.testnatife.recyclerview.GifsAdapter
 import com.android.testnatife.retrofit.data.api.GifApi
-import com.android.testnatife.retrofit.data.test.DataTest
+import com.android.testnatife.retrofit.data.Data
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,27 +25,44 @@ class FirstScreenViewModel : ViewModel() {
     init {
         AppMain().getAppComponent().inject(this)
         val getGifsFromDI = gifApi.getGifs()
+        viewModelScope.launch {
+            main(getGifsFromDI)
+        }.start()
 
-        gifResponse(getGifsFromDI)
+
+
     }
+    suspend fun main(getGifsFromDI: Call<Data>){
+        coroutineScope {
+            launch {
+                gifResponse(getGifsFromDI)
+            }
+        }
+    }
+    private fun gifResponse(gifsFromDI: Call<Data>) {
 
-    private  fun gifResponse(gifsFromDI: Call<DataTest>) {
-
-        gifsFromDI.enqueue(object: Callback<DataTest> {
-            override fun onResponse(call: Call<DataTest>, response: Response<DataTest>) {
-                for(gif in response.body()?.data!!){
-                        list.add(gif)
-                }
-                liveData.postValue(list)
+        gifsFromDI.enqueue(object: Callback<Data> {
+            override fun onResponse(call: Call<Data>, response: Response<Data>) {
+               if(response.isSuccessful){
+                   for(gif in response.body()?.data!!){
+                       list.add(gif)
+                   }
+                   liveData.postValue(list)
+               }
                 Log.d("TESTLOG", "onResponse :  ${response.body()}")
             }
 
-            override fun onFailure(call: Call<DataTest>, t: Throwable) {
+            override fun onFailure(call: Call<Data>, t: Throwable) {
                 Log.d("Fail", "OnFailure : ${t.localizedMessage}")
             }
 
         })
 
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 
 
