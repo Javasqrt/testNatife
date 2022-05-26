@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.testnatife.R
-import com.android.testnatife.models.SecondScreenViewModel
+import com.android.testnatife.viewmodels.SecondScreenViewModel
 
 class SecondScreenFragment : Fragment() {
 

@@ -2,19 +2,18 @@ package com.android.testnatife.di.modules
 
 
 
+import com.android.testnatife.retrofit.data.api.GifApi
 import dagger.Module
 import dagger.Provides
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 
 @Module
 class RetrofitModule {
-
     @Provides
     @Singleton
-    fun provideRetrofit() : Retrofit? {
-
-        return null
+    fun provideGifApi(): GifApi{
+        return GifApi.init()
     }
+
 }

@@ -1,4 +1,4 @@
-package com.android.testnatife.models
+package com.android.testnatife.viewmodels
 
 import androidx.lifecycle.ViewModel
 

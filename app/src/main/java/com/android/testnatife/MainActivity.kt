@@ -1,10 +1,9 @@
 package com.android.testnatife
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.android.testnatife.databinding.ActivityMainBinding
-import com.android.testnatife.di.AppMain
 
 
 private lateinit var binding:ActivityMainBinding
@@ -12,7 +11,6 @@ private lateinit var binding:ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppMain()
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
