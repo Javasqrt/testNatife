@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.testnatife.di.AppMain
 import com.android.testnatife.recyclerview.Gif
-import com.android.testnatife.retrofit.data.api.GifApi
 import com.android.testnatife.retrofit.data.Data
+import com.android.testnatife.retrofit.data.api.GifApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
