@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.android.testnatife.R
 import com.android.testnatife.databinding.SecondScreenFragmentBinding
 import com.android.testnatife.viewmodels.SecondScreenViewModel
+import com.android.testnatife.viewmodels.vmfactory.SecondFragmentFactory
 import com.bumptech.glide.Glide
 
 class SecondScreenFragment : Fragment() {
@@ -24,8 +26,6 @@ class SecondScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        gifImageUrl = arguments?.getString("gifImageUrl").toString()
-        gifName = arguments?.getString("gifName").toString()
         binding = SecondScreenFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -33,27 +33,24 @@ class SecondScreenFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[SecondScreenViewModel::class.java]
-        with(binding){
-            Glide.with(binding.root)
-                .asGif()
-                .load(gifImageUrl)
-                .error(R.drawable.error_icon)
-                .centerCrop()
-                .into(imagegif)
-            namegif.text = gifName
-        }
-     /*   viewModel.liveData.observe(this, Observer {
-            with(binding){
+        viewModel = ViewModelProvider(this, SecondFragmentFactory(requireActivity().application,arguments))[SecondScreenViewModel::class.java]
+        viewModel.liveDataStringUrl.observe(this, Observer {
+            with(binding) {
                 Glide.with(binding.root)
                     .asGif()
-                    .load(it.images)
+                    .load(it)
                     .error(R.drawable.error_icon)
                     .centerCrop()
                     .into(imagegif)
-                namegif.text = it.name
             }
-        })*/
+
+        })
+        viewModel.liveDataStringName.observe(this, Observer {
+            with(binding){
+                namegif.text = it
+            }
+
+        })
 
     }
 

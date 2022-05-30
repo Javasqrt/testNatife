@@ -65,7 +65,7 @@ class GifsAdapter(private var gifList:ArrayList<Gif>): RecyclerView.Adapter<Gifs
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun getItemSearch(arrayList: ArrayList<Gif>) {
+    fun setItemSearch(arrayList: ArrayList<Gif>) {
         gifList = arrayList
         notifyDataSetChanged()
     }

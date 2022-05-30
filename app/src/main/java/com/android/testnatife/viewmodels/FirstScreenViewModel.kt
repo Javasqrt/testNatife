@@ -17,8 +17,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class FirstScreenViewModel : ViewModel() {
-    val liveData: MutableLiveData<ArrayList<Gif>> = MutableLiveData()
-    private val list = ArrayList<Gif>()
+    val currentGifList: MutableLiveData<ArrayList<Gif>> = MutableLiveData()
+   val fullGifsList = ArrayList<Gif>()
     @Inject
     lateinit var gifApi: GifApi
 
@@ -45,9 +45,9 @@ class FirstScreenViewModel : ViewModel() {
             override fun onResponse(call: Call<Data>, response: Response<Data>) {
                if(response.isSuccessful){
                    for(gif in response.body()?.data!!){
-                       list.add(gif)
+                       fullGifsList.add(gif)
                    }
-                   liveData.postValue(list)
+                   currentGifList.postValue(fullGifsList)
                }
                 Log.d("TESTLOG", "onResponse :  ${response.body()}")
             }

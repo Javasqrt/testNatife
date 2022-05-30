@@ -39,59 +39,15 @@ class FirstScreenFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[FirstScreenViewModel::class.java]
 
-        viewModel.liveData.observe(this, Observer {
-            binding.apply {
+        viewModel.currentGifList.observe(this, Observer {
+            with(binding){
                 adapter = GifsAdapter(it)
-
-                edSearch.addTextChangedListener(object: TextWatcher{
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-
-                    }
-
-                    override fun afterTextChanged(s: Editable?) {
-
-                        arrayListSearch =
-                            ArrayList<Gif>()
-
-                        for (item in it) {
-                            if (item.name.lowercase().contains(s.toString().lowercase())) {
-                                arrayListSearch.add(item)
-
-
-                            } else if (item.name.uppercase().contains(s.toString().uppercase())) {
-
-                                arrayListSearch.add(item)
-
-
-                            }
-                        }
-
-                        adapter.getItemSearch(arrayListSearch)
-
-                    }
-
-                })
-
                 adapter.setOnItemClickListener(object : GifsAdapter.onItemClickListener{
                     override fun onItemClick(position: Int) {
 
                         val bundle = Bundle()
-                        bundle.putString("gifImageUrl",it[position].getUrl())
-                        bundle.putString("gifName", it[position].name)
+                        bundle.putString("gifImageUrl", viewModel.currentGifList.value?.get(position)?.getUrl())
+                        bundle.putString("gifName", viewModel.currentGifList.value?.get(position)?.name)
                         val navigation = Navigation.findNavController(binding.root)
                         val action = R.id.action_firstScreenFragment_to_secondScreenFragment
                         navigation.navigate(action,bundle)
@@ -99,15 +55,66 @@ class FirstScreenFragment : Fragment() {
                     }
 
                 })
-
-
-
                 recyclerItems.layoutManager = LinearLayoutManager(requireContext())
                 recyclerItems.adapter = adapter
+
+
+
+
 
             }
 
         })
+        binding.apply {
+            edSearch.addTextChangedListener(object: TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+                    arrayListSearch =
+                        ArrayList<Gif>()
+
+                    for (item in viewModel.fullGifsList) {
+                        if (item.name.lowercase().contains(s.toString().lowercase())) {
+                            arrayListSearch.add(item)
+
+
+                        } else if (item.name.uppercase().contains(s.toString().uppercase())) {
+
+                            arrayListSearch.add(item)
+
+
+                        }
+                    }
+
+
+                    viewModel.currentGifList.value = arrayListSearch
+
+                }
+
+            })
+
+
+        }
+
+
+
 
 
 
