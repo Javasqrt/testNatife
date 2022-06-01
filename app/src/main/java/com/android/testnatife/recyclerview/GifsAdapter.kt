@@ -1,6 +1,5 @@
 package com.android.testnatife.recyclerview
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +9,9 @@ import com.android.testnatife.databinding.TableRowViewBinding
 import com.bumptech.glide.Glide
 
 
-class GifsAdapter(private var gifList:ArrayList<Gif>): RecyclerView.Adapter<GifsAdapter.GifsHolder>() {
+class GifsAdapter(private val gifList:ArrayList<Gif>): RecyclerView.Adapter<GifsAdapter.GifsHolder>() {
 
-    lateinit var mListener: onItemClickListener
+    private lateinit var mListener: onItemClickListener
     interface onItemClickListener{
         fun onItemClick(position: Int)
     }
@@ -29,7 +28,7 @@ class GifsAdapter(private var gifList:ArrayList<Gif>): RecyclerView.Adapter<Gifs
             }
         }
 
-        fun bind(gif: Gif){
+       fun bind(gif: Gif){
            with(binding){
                gifName.text = gif.name
                Glide.with(itemView)
@@ -61,12 +60,5 @@ class GifsAdapter(private var gifList:ArrayList<Gif>): RecyclerView.Adapter<Gifs
     override fun getItemCount(): Int {
 
         return gifList.size
-    }
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setItemSearch(arrayList: ArrayList<Gif>) {
-        gifList = arrayList
-        notifyDataSetChanged()
     }
 }

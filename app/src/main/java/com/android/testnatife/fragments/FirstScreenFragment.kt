@@ -27,7 +27,7 @@ class FirstScreenFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
 
         binding = FirstScreenFragmentBinding.inflate(inflater,container,false)
@@ -35,11 +35,12 @@ class FirstScreenFragment : Fragment() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[FirstScreenViewModel::class.java]
 
-        viewModel.currentGifList.observe(this, Observer {
+        viewModel.currentGifList.observe(viewLifecycleOwner, Observer {
             with(binding){
                 adapter = GifsAdapter(it)
                 adapter.setOnItemClickListener(object : GifsAdapter.onItemClickListener{

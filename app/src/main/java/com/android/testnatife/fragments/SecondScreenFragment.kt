@@ -15,8 +15,6 @@ import com.bumptech.glide.Glide
 
 class SecondScreenFragment : Fragment() {
     private lateinit var binding: SecondScreenFragmentBinding
-    private lateinit var gifImageUrl: String
-    private lateinit var gifName: String
 
 
     private lateinit var viewModel: SecondScreenViewModel
@@ -24,16 +22,17 @@ class SecondScreenFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SecondScreenFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProvider(this, SecondFragmentFactory(requireActivity().application,arguments))[SecondScreenViewModel::class.java]
-        viewModel.liveDataStringUrl.observe(this, Observer {
+        viewModel.liveDataStringUrl.observe(viewLifecycleOwner, Observer {
             with(binding) {
                 Glide.with(binding.root)
                     .asGif()
@@ -44,7 +43,7 @@ class SecondScreenFragment : Fragment() {
             }
 
         })
-        viewModel.liveDataStringName.observe(this, Observer {
+        viewModel.liveDataStringName.observe(viewLifecycleOwner, Observer {
             with(binding){
                 namegif.text = it
             }
